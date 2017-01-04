@@ -1,0 +1,10 @@
+[somecontext]
+;***************************UTILISATION MACRO**********************************
+;exten => 100,1,VoiceMailMain()
+;exten => XX,1,Macro(voicemail,SIP/bastian,6005@vm-demo) ; A décommenter pourtester macro 1
+exten => 90,1,Macro(confpub,NomDeLaConf,confroom_1,user_nomdp,sample_user_menu) ; A decommenter pour tester macro 2
+;exten => XX,1,Macro(confpriv,NomDeLaConf,confroom_2,user_mdp) ; A decommenter pour tester macro 3
+;exten => XX,1,Macro(svi,SIP/bastian,SIP/demo-alice) ; A decommenter pour tester macro 5
+
+include => mobile
+exten => 92,1,Macro(confpub,a,a,user_nomdp,sample_user_menu)

@@ -1,0 +1,6 @@
+[user_nomdp]
+type=user
+admin=no
+announce_join_leave=yes
+music_on_hold_when_empty=yes
+announce_user_count=yes

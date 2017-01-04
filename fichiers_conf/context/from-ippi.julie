@@ -1,0 +1,11 @@
+[from_ippi]
+;exten => s,1,Dial(SIP/21,20)
+exten => s,1,Answer
+exten => s,2,Ringing
+exten => s,3,Wait(2)
+exten => s,4,Queue(Sales,twh)
+;exten => n,GotoIf($["${DIALSTATUS}" = "BUSY"]?unavailable)
+;exten => s,n(unavailable),VoiceMail(24@default,u)
+exten => s,5,Hangup()
+include => somecontext
+include => mobile

@@ -1,0 +1,21 @@
+[mobile]
+exten => _XX,1,Macro(transfertmob,SIP/${EXTEN},${CALLERID(num)},${EXTEN}@default) ; A decommenter pour tester macro 4
+include => somecontext
+
+; call center ne pas toucher !!!!!!!!!
+exten => _3XXX1,1,Answer
+exten => _3XXX1,n,Read(Agent,Agent-user)
+exten => _3XXX1,n,Macro(queue-login)
+exten => _3XXX1,n,Hangup
+
+exten => _3XXX11,1,Answer
+exten => _3XXX11,n,Read(Agent,Agent-user)
+exten => _3XXX11,n,Macro(queue-logout,${Agent},${EXTEN:0:4})
+exten => _3XXX11,n,Hangup
+
+exten => 21,1,Answer
+exten => 21,n,Ringing
+exten => 21,n,Wait(2)
+exten => 21,n,Set(_doVoicemail=no)
+exten => 21,n,Queue(Sales,twh)
+exten => 21,n,Hangup

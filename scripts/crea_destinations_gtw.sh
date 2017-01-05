@@ -12,7 +12,7 @@ then
 	then
 		if [[ -f /usr/local/var/lib/asterisk/context/$3.conf && -f /usr/local/var/lib/asterisk/context/$3.conf ]]
 		then
-			# verifier unicitÃ ©du switch si tps !!!!
+			# verifier unicite du switch dans la bdd
 			touch /usr/local/var/lib/asterisk/context/$1_incoming.conf
 			echo "[$1_incoming]" >> /usr/local/var/lib/asterisk/context/$1_incoming.conf
 			echo "exten => s,1,Dial(SIP/21,20)" >> /usr/local/var/lib/asterisk/context/$1_incoming.conf

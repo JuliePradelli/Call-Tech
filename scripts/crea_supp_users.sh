@@ -23,7 +23,7 @@ then
 		# ******************** CREATION USER ********************************
 		if [[ "$1" -eq 0 && ! -z "$3" && ! -z "$4" && ! -z "$5" && ! -z "$6" ]] 
 		then
-			if [[ "$5" =~ ^[0-9]{2}$ && "$6" =~ ((mobile)$|(somecontext)$) ]] # ici regex mail et verif pas d'espace ds username
+			if [[ "$5" =~ ^[0-9]{2}$ && "$6" =~ ((mobile)$|(somecontext)$) && "$4" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]
 			then
 				# ******************** MOBILE ********************************
 				if [[ "$6" -eq "mobile" && ! -z "$7" && "$existence" -eq 0 ]]
@@ -72,18 +72,28 @@ then
 					echo "cet utilisateur existe deja"
 				fi
 			else
-				echo "Veuillez saisir correctement les parametres 5 et 6."
+				echo "Veuillez saisir correctement les parametres 4, 5 et 6."
 			fi
 		# ******************** DESTRUCTION USER ********************************
 		elif [[ $1 -eq 1 && "$existence" -eq 1 ]]
 		then
 			rm /usr/local/var/lib/asterisk/users/$2.conf
-			chemin="#include \"/usr/local/var/lib/asterisk/users/$2.conf\""
-			ligne=`grep -n "$chemin" /usr/local/etc/asterisk/sip.conf`
-			num=`echo $ligne | cut -d':' -f1`
-			sed -i".sav" "$num d" /usr/local/etc/asterisk/sip.conf
-			rm /usr/local/etc/asterisk/sip.conf.sav
-			service asterisk reload
+			chemin1="#include \"/usr/local/var/lib/asterisk/users/$2.conf\""
+			ligne1=`grep -n "$chemin1" /usr/local/etc/asterisk/sip.conf`
+			chemin2="$2"
+			ligne2=`grep -n "$chemin2" /usr/local/etc/asterisk/voicemail.conf`
+			if [[ ! -z $ligne1 && ! -z $ligne2 ]]
+			then
+				num1=`echo $ligne1 | cut -d':' -f1`
+				sed -i".sav" "$num1 d" /usr/local/etc/asterisk/sip.conf
+				rm /usr/local/etc/asterisk/sip.conf.sav
+				num2=`echo $ligne2 | cut -d':' -f1`
+				sed -i".sav" "$num2 d" /usr/local/etc/asterisk/voicemail.conf
+				rm /usr/local/etc/asterisk/voicemail.conf.sav
+				service asterisk reload
+			else
+				echo "Nous n'avons pas pu supprimer cet utilisateur"
+			fi
 		else
 			echo "Si vous voulez ajouter, il manque probablement des arguments et si vous voulez supprimer, cet user n'existe pas."
 		fi

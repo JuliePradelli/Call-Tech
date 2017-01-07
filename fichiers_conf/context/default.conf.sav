@@ -1,0 +1,5 @@
+[default]
+exten => 36,1,Macro(transfertmob,SIP/36,0677777777)
+
+include => mobile
+include => standard

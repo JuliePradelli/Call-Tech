@@ -1,0 +1,36 @@
+
+[from_ippi]
+exten => s,1,Dial(SIP/julie,20)
+include => somecontext
+
+;IVR 
+;Asterisk répond
+[somecontext]
+exten => 8001,1,Answer()
+;On met un timeout de 10 secondes pour le choix du destinatire
+exten => 8001,2,Set(TIMEOUT(response)=10)
+;On annonce les différents choi
+exten => 8001,3,agi(googletts.agi,"Bienvenues sur coletech",fr,any)
+exten => 8001,4,agi(googletts.agi,"Qui souhaitez vous joindre?",fr,any)
+exten => 8001,5,agi(googletts.agi,"Pour Alice �a glisse tapez 1",fr,any)
+exten => 8001,6,agi(googletts.agi,"Pour Bob leeee bricoleur tapez 2",fr,any)
+exten => 8001,7,agi(googletts.agi,"Appuyez sur dièse si vous souhaitez réécouter ce  message",fr,any)
+;On attend que l'utilisateur appuis sur une touche
+exten => 8001,8,WaitExten()
+;Salles de conf�rences
+exten => 900,1,ConfBridge(Room_1,ConfRoom_1,user_nomdp)
+exten => 901,1,ConfBridge(Room_1,ConfRoom_1,user_admin) 
+;Si l'utilisateur appuis sur 1 on va  a la priorité 1 du numéro 6001
+exten => 1,1,Goto(6001,1)
+;Si l'utilisateur appuis sur 1 on va a la priorité 1 du numéro 6002
+exten => 2,1,Goto(6002,1)
+;Si l'utilisateur tape un numéro compris entre 3 et 9 etil retourne a l'étape 3 de l'IVR
+exten => _[3-9#],1,Goto(8001,3)
+;Si l'utilisateur ne fais rien il retourne a l'étape 3 de l'IVR au bout de 10 secondes.
+exten => t,1,Goto(8001,3)
+exten=>6001,1,Dial(SIP/demo-alice,20)
+exten=>6002,1,Dial(SIP/demo-bob,20)
+exten=>6003,1,Dial(SIP/florian,20)
+exten=>6004,1,Dial(SIP/alexandre,20)
+exten=>6005,1,Dial(SIP/bastian,20)
+exten=>6006,1,Dial(SIP/julie,20)

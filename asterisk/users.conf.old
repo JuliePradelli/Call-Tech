@@ -1,0 +1,70 @@
+[general]
+hasvoicemail = yes
+hassip = yes
+hasiax = yes
+callwaiting = yes
+threewaycalling = yes
+callwaitingcallerid = yes
+transfer = yes
+canpark = yes
+cancallforward = yes
+callreturn = yes
+callgroup = 1
+pickupgroup = 1
+nat = yes
+
+[6001]
+type=friend
+host=dynamic
+dtmfmode=rfc2833
+disallow=all
+allow=ulaw
+fullname = John DOE
+username = jdoe
+secret=secret
+context = work
+ 
+[6002]
+type=friend
+host=dynamic
+dtmfmode=rfc2833
+disallow=all
+allow=ulaw
+fullname = Albert DUPONT
+username = adupont
+secret=secret
+context = work
+
+[6005]
+type=friend
+host=dynamic
+dtmfmode=rfc2833
+disallow=all
+allow=ulaw
+fullname = julie 
+username = julie
+secret=secret
+context = work
+
+[6006]
+type=friend
+host=dynamic
+dtmfmode=rfc2833
+disallow=all
+allow=ulaw
+fullname= alexandre
+username = alexandre
+secret=secret
+context = work
+
+[6006]
+type=friend
+host=dynamic
+dtmfmode=rfc2833
+disallow=all
+allow=ulaw
+fullname=florian
+username =florian
+secret=secret
+context = work
+

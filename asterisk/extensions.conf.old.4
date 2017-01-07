@@ -1,0 +1,74 @@
+[general]
+
+[from_ippi]
+exten => s,1,Dial(SIP/julie,20)
+include => somecontext
+
+[somecontext]
+
+exten=>6002,1,Dial(SIP/demo-bob,20)
+exten=>6002,n,VoiceMail(6002@vm-demo,u)
+exten=>6003,1,Dial(SIP/florian,20)
+exten=>6003,n,VoiceMail(6003@vm-demo,u)
+exten=>6004,1,Dial(SIP/alexandre,20)
+exten=>6004,n,VoiceMail(6004@vm-demo,u)
+exten=>6005,1,Dial(SIP/bastian,20)
+exten=>6005,n,VoiceMail(6005@vm-demo,u)
+exten=>6006,1,Dial(SIP/julie,20)
+exten=>6006,n,VoiceMail(6006@vm-demo,u)
+exten=>6001,1,Dial(SIP/demo-alice,20)
+exten=>6001,n,VoiceMail(6001@vm-demo,u)
+
+exten=>900,1,ConfBridge(Room_1,ConfRoom_1,User_Nomdp)
+exten=>901,1,ConfBridge(Room_1,ConfRoom_1,User_Admin)
+
+exten=>903,1,ConfBridge(Room_2,ConfRoom_2,User_mdp)
+exten=>904,1,ConfBridge(Room_2,ConfRoom_2,User_Admin)
+
+;Asterisk r\xc3\xa9pond
+;exten=>8001,1,Answer()
+;On met un timeout de 10 secondes pour le choix du destinatire
+;exten=>8001,2,Set(TIMEOUT(response)=10)
+;On annonce les différents choix
+;exten=>8001,3,agi(googletts.agi,"Bienvenues sur coletech",fr,any)
+;exten=>8001,4,agi(googletts.agi,"Qui souhaitez vous joindre?",fr,any)
+;exten=>8001,5,agi(googletts.agi,"Pour Alice ca glisse tapez 1",fr,any)
+;exten=>8001,6,agi(googletts.agi,"Pour Bob leeee bricoleur tapez 2",fr,any)
+;exten=>8001,7,agi(googletts.agi,"Appuyez sur dièse si vous souhaitez�couter ce  message",fr,any)
+;On attend que l'utilisateur appuis sur une touche
+;exten=>8001,3,Espeak("Bienvenue sur Calltech",any,fr)
+;exten=>8001,4,Espeak("Qui souhaitez vous joindre ?",any,fr)
+;exten=>8001,5,Espeak("Pour Alice tapez 1",any,fr)
+;exten=>8001,6,Espeak("Pour Bob tapez 2",any,fr)
+;exten=>8001,7,Espeak("Appuyez sur dièse si vous souhaitez re ecouter ce message",any,fr)
+
+
+exten => 5001,1,Answer
+exten => 5001,2,Wait(2)
+exten => 5001,3,Record(asterisk-recording%d:ulaw)
+exten => 5001,4,Wait(2)
+exten => 5001,5,Playback(${RECORDED_FILE})
+exten => 5001,6,Wait(2)
+exten => 5001,7,Hangup
+
+;On crée un extension pour appeler l'IVR
+exten => 8001,1,Goto(ivr-voice,s,1)
+ 
+;Contexte ivr-voice
+[ivr-voice]
+exten => s,1,Answer()
+exten => s,2,Set(TIMEOUT(response)=10)
+exten => s,3,Background(IVR-001)
+exten => s,4,WaitExten()
+
+exten=>8001,8,WaitExten()
+
+;Si l'utilisateur appuis sur 1 on va  a la priorité 1 du num\xc3\xa9ro 6001
+exten=>1,1,Goto(demo-alice,6001,1)
+;Si l'utilisateur appuis sur 1 on va a la priorité 1 du num\xc3\xa9ro 6002
+exten=>2,1,Goto(demo-bob,6002,1)
+;Si l'utilisateur tape un numéro compris entre 3 et 9 etil retourne a létape 3 de l'IVR
+exten=>_[3-9#],1,Goto(ivr-voice,s,3)
+;Si l'utilisateur ne fais rien il retourne a l'étape 3 de l'IVR au bout de 10 secondes.
+exten=>t,1,Goto(ivr-voice,s,3)
+

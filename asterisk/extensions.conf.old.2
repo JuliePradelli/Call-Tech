@@ -1,0 +1,103 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Ne pas effacer;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[somecontext]
+;[voicemailbox]
+; direct incoming calls to a mailbox
+exten =>  Deliver,1,NoOp()
+    same =>  n,Set(Mailbox=${SIP_HEADER(X-Voicemail-Mailbox)})
+    same =>  n,Set(MailboxContext=${SIP_HEADER(X-Voicemail-Context)})
+    same =>  n,VoiceMail(${Mailbox}@${MailboxContext})
+    same =>  n,Hangup()
+
+; connect users to their mailbox so that they can retrieve messages exten =>  
+Retrieve,1,NoOp()
+    same =>  n,Set(Mailbox=${SIP_HEADER(X-Voicemail-Mailbox)})
+    same =>  n,Set(MailboxContext=${SIP_HEADER(X-Voicemail-Context)})
+    same =>  n,VoiceMailMain(${Mailbox}@${MailboxContext})
+    same =>  n,Hangup()
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;Ne pas effacer;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;IVR 
+;Asterisk répond
+exten => 9001,1,Answer()
+;On met un timeout de 10 secondes pour le choix du destinatire
+exten => 9001,2,Set(TIMEOUT(response)=10)
+;On annonce les différents choix
+exten => 9001,3,agi(googletts.agi,"Bienvenues sur coletech",fr,any)
+exten => 9001,4,agi(googletts.agi,"Qui souhaitez vous joindre?",fr,any)
+exten => 9001,5,agi(googletts.agi,"Pour Alice �a glisse tapez 1",fr,any)
+exten => 9001,6,agi(googletts.agi,"Pour Bob leeee bricoleur tapez 2",fr,any)
+exten => 9001,7,agi(googletts.agi,"Appuyez sur dièse si vous souhaitez réécouter ce  message",fr,any)
+;On attend que l'utilisateur appuis sur une touche
+exten => 9001,8,WaitExten()
+ 
+;Si l'utilisateur appuis sur 1 on va  a la priorité 1 du numéro 6001
+exten => 1,1,Goto(6001,1)
+;Si l'utilisateur appuis sur 1 on va a la priorité 1 du numéro 6002
+exten => 2,1,Goto(6002,1)
+;Si l'utilisateur tape un numéro compris entre 3 et 9 etil retourne a l'étape 3 de l'IVR
+exten => _[3-9#],1,Goto(9001,3)
+;Si l'utilisateur ne fais rien il retourne a l'étape 3 de l'IVR au bout de 10 secondes.
+exten => t,1,Goto(9001,3)
+
+[macro-appel]
+exten = s,1,Answer()
+exten = s,2,Dial(${ARG1},10,r)
+exten = s,3,Hangup()
+
+[somecontext]
+exten => 101,1,Dial(${JOHN},10)
+exten => 101,n,VoiceMail(101@default,u)
+exten => 1001,1,Macro(appel,SIP/demo-alice)
+exten => 1002,1,Macro(appel,SIP/demo-bob)
+exten => 900,1,ConfBridge(Room_1,ConfRoom_1,user_nomdp)
+exten => 901,1,ConfBridge(Room_1,ConfRoom_1,user_admin)
+exten => 8001,1,Meetme(1)
+;exten => 1001,2,Playback(/usr/local/var/lib/asterisk/zombies.sln16)
+;exten = 7000,1,Verbose("We are going to run a Macro before Dialing!")
+;same = n,Dial(PJSIP/ALICE)
+;same = n,Macro(announcement,s,1)
+
+
+[from-internal]
+;conference
+
+
+;exten => 903,1,ConfBridge(Room_2,ConfRoom_2,user_mdp)
+;exten => 904,1,ConfBridge(Room_2,ConfRoom_2,user_admin)
+
+
+
+
+;exten=> 6001,1,MeetMe(1)
+;exten=> 6002,4,Meetme,4,room(4)
+
+;exten => 18,1,Answer
+;exten => 18,2,Wait(1)
+;exten => 18,3,Authenticate(5678)
+;exten => 18,4,MeetMe(18|p)
+;exten => 18,5,Playback(vm-goodbye)
+;exten => 18,6,Hangup
+
+
+exten=>6001,1,Dial(SIP/demo-alice,20)
+exten=>6002,1,Dial(SIP/demo-bob,20)
+
+;Salles de conf�rence
+;exten=> 7002,2,MeetMe(1)
+;exten=> 7003,3,MeetMe(1)
+
+;exten => 6001,1,Answer(SIP/demo-alice,500)
+;   same => n(loop),Background(/usr/local/var/lib/asterisk/vm-press.sln16)
+;   same => n,WaitExten()
+
+;exten => 1,1,Playback(you-entered)
+;   same => n,SayNumber(1)
+;   same => n,Goto(s,loop)
+ 
+;exten => 2,1,Playback(you-entered)
+;   same => n,SayNumber(2)
+;   same => n,Goto(s,loop)
+

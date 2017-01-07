@@ -5,11 +5,10 @@
 # $1=creation(0)/suppression(1)
 # $2=nom de la salle de conference
 # $3=numero de la salle de conference
-# $4=contexte ou on place la salle de conference
-# $5=nom du nouvel utilisateur mdp 
-# $6=mot de passe(4 chiffres)
+# $4=nom utilisateur mdp 
+# $5=mot de passe 4 chiffres
 
-if [[ ! -z "$1" && ! -z "$2" && ! -z "$3" && ! -z "$4" ]] 
+if [[ ! -z "$1" && ! -z "$2" && ! -z "$3" ]] 
 then
 	if [[ "$1" =~ ^[0-1]{1}$ ]]
 	then
@@ -17,22 +16,22 @@ then
 		then
 			if [[ ! -f "/usr/local/var/lib/asterisk/room_conference/$2.conf" ]]
 			then
-				if [[ ! -z "$6" ]]
+				if [[ ! -z "$5" ]]
 				then
-					if [[ "$6" =~ ^[0-9]{4}$ && ! -z "$5" ]]
+					if [[ ! -z "$4" ]]
 					then
-						if [[ ! -f "/usr/local/var/lib/asterisk/users_conference/$5.conf" ]]
+						if [[ ! -f "/usr/local/var/lib/asterisk/users_conference/$4.conf" ]]
 						then
-							touch /usr/local/var/lib/asterisk/users_conference/$5.conf
-							echo "[$5]" >> /usr/local/var/lib/asterisk/users_conference/$5.conf
-							echo "type=user" >> /usr/local/var/lib/asterisk/users_conference/$5.conf
-							echo "admin=no" >> /usr/local/var/lib/asterisk/users_conference/$5.conf
-							echo "music_on_hold_when_empty=yes" >> /usr/local/var/lib/asterisk/users_conference/$5.conf
-							echo "announce_user_count=yes" >> /usr/local/var/lib/asterisk/users_conference/$5.conf
-							echo "pin=$6" >> /usr/local/var/lib/asterisk/users_conference/$5.conf
+							touch /usr/local/var/lib/asterisk/users_conference/$4.conf
+							echo "[$4]" >> /usr/local/var/lib/asterisk/users_conference/$4.conf
+							echo "type=user" >> /usr/local/var/lib/asterisk/users_conference/$4.conf
+							echo "admin=no" >> /usr/local/var/lib/asterisk/users_conference/$4.conf
+							echo "music_on_hold_when_empty=yes" >> /usr/local/var/lib/asterisk/users_conference/$4.conf
+							echo "announce_user_count=yes" >> /usr/local/var/lib/asterisk/users_conference/$4.conf
+							echo "pin=$5" >> /usr/local/var/lib/asterisk/users_conference/$4.conf
 
-							echo "#include \"/usr/local/var/lib/asterisk/users_conference/$5.conf\"" >> /usr/local/etc/asterisk/confbridge.conf
-							user="$5"
+							echo "#include \"/usr/local/var/lib/asterisk/users_conference/$4.conf\"" >> /usr/local/etc/asterisk/confbridge.conf
+							user="$4"
 						else
 							echo "Cet utilisateur existe deja, veuillez choisir un autre nom."
 						fi
@@ -43,7 +42,7 @@ then
 					user="user_nomdp"
 				fi
 
-				if [[ "$3" =~ ^[90-99]{2}$ && -f /usr/local/var/lib/asterisk/context/$4.conf ]] # penser a verifier si le numero existe deja via bdd !!!!
+				if [[ "$3" =~ ^9[0-9]{1}$ ]] # penser a verifier si le numero existe deja via bdd !!!!
 				then
 					touch /usr/local/var/lib/asterisk/room_conference/$2.conf
 					echo "[$2]" >> /usr/local/var/lib/asterisk/room_conference/$2.conf
@@ -51,7 +50,7 @@ then
 					echo "max_members=10" >> /usr/local/var/lib/asterisk/room_conference/$2.conf
 
 					echo "#include \"/usr/local/var/lib/asterisk/room_conference/$2.conf\"" >> /usr/local/etc/asterisk/confbridge.conf
-					echo "exten => $3,1,Macro(confpub,$2,$2,$user,sample_user_menu)" >> /usr/local/var/lib/asterisk/context/$4.conf
+					echo "exten => $3,1,Macro(confpub,$2,$2,$user,sample_user_menu)" >> /usr/local/var/lib/asterisk/context/conference.conf
 					service asterisk reload
 				else
 					echo "Votre numero est invalide ou ce contexte n'existe pas."
@@ -61,25 +60,25 @@ then
 			fi
 		elif [[ "$1" -eq 1 ]]
 		then
-			if [[ ! -z $5 ]]
+			if [[ ! -z $4 ]]
 			then
-				if [[ -f "/usr/local/var/lib/asterisk/users_conference/$5.conf"]]
+				if [[ -f "/usr/local/var/lib/asterisk/users_conference/$4.conf" ]]
 				then
-					rm /usr/local/var/lib/asterisk/users_conference/$5.conf
+					rm /usr/local/var/lib/asterisk/users_conference/$4.conf
 				else
 					" L'utilisateur mdp n'a pas pu etre supprime, son fichier est inexistant."
 				fi
 			fi
 			if [[ -f "/usr/local/var/lib/asterisk/room_conference/$2.conf" ]] 
 			then
-				if [[ -f "/usr/local/var/lib/asterisk/context/$4.conf" && "$3" =~ ^[90-99]{2}$ ]]
+				if [[ "$3" =~ ^9[0-9]{1}$ ]]
 				then
 					chemin="exten => $3,1,Macro(confpub,$2"
-					ligne=`grep -n "$chemin" /usr/local/var/lib/asterisk/context/$4.conf`
+					ligne=`grep -n "$chemin" /usr/local/var/lib/asterisk/context/conference.conf`
 					num=`echo $ligne | cut -d':' -f1`
 					if [[ ! -z "$num" ]]
 					then
-						sed -i".sav" "$num d" /usr/local/var/lib/asterisk/context/$4.conf
+						sed -i".sav" "$num d" /usr/local/var/lib/asterisk/context/conference.conf
 
 						rm /usr/local/var/lib/asterisk/room_conference/$2.conf
 						service asterisk reload
@@ -98,5 +97,5 @@ then
 		echo "Veuillez saisir correctement le premier parametre."
 	fi
 else
-	echo "Veuillez renseigner au moins les quatre premiers parametres (creation(0)/suppression(1) - nom de la salle de conference - numero de la salle(pour la joindre sur deux chiffres entre 90 et 99) - le contexte ou il y aura son exten - le mot de passe - le nom de l'utilisateur mot de passe)."
+	echo "Veuillez renseigner au moins les quatre premiers parametres (creation(0)/suppression(1) - nom de la salle de conference - numero de la salle(pour la joindre sur deux chiffres entre 90 et 99) - le nom de l'utilisateur mot de passe - mot de passe(4chiffres))."
 fi

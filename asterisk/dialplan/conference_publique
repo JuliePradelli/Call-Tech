@@ -1,0 +1,4 @@
+[conference-publique]
+exten=>900,1,ConfBridge(Room_1,ConfRoom_1,User_Nomdp)
+exten=>901,1,ConfBridge(Room_1,ConfRoom_1,User_Admin)
+

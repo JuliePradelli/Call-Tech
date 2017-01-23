@@ -226,7 +226,7 @@ fieldset[disabled] .btn-xl.active {
   }
 }
 header {
-  background-image: url('../calltech-logo.png');
+  background-image: url('../vue/calltech-logo.png');
   background-repeat:no-repeat;
   background-attachment: scroll;
   background-position: center bottom;
@@ -555,7 +555,6 @@ aside.clients img {
 }
 section#contact {
   background-color: #222222;
-  background-image: url('../img/map-image.png');
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -743,4 +742,10 @@ img::-moz-selection {
 }
 body {
   webkit-tap-highlight-color: #fed136;
+}
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+.input-group-addon.beautiful input[type="checkbox"],
+.input-group-addon.beautiful input[type="radio"] {
+    display: none;
 }

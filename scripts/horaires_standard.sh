@@ -18,11 +18,9 @@ then
 	if [[ "$1" =~ ^[0-9]{1,2}\:[0-9]{2}$ && "$2" =~ ^[0-9]{1,2}\:[0-9]{2}$ && "$1" != "$2" ]]
 	then	
 		h="$1-$2"
-		echo "$h"
 	elif [[ "$1" = $star && "$2" = $star ]]
 	then	
 		h="*"
-		echo "$h"
 	else
 		echo "Veuillez saisir deux heures differentes ou deux r."
 	fi
@@ -30,23 +28,18 @@ then
 	if [[ "$3" =~ ((mon)$|(tue)$|(wed)$|(thu)$|(fri)$|(sat)$|(sun)$) && "$4" =~ ((mon)$|(tue)$|(wed)$|(thu)$|(fri)$|(sat)$|(sun)$) && "$3" == "$4" ]]
 	then
 		d="$3"
-		echo "pb $d"
 	elif [[ "$3" =~ ((mon)$|(tue)$|(wed)$|(thu)$|(fri)$|(sat)$|(sun)$) && "$4" =~ ((mon)$|(tue)$|(wed)$|(thu)$|(fri)$|(sat)$|(sun)$) && "$3" != "$4" ]]
 	then
 		d="$3-$4"
-		echo "sb $d"
 	elif [[ "$3" = $star && "$4" = $star ]]
 	then
 		d="*"
-		echo "$d"
 	elif [[ "$3" =~ ((mon)$|(tue)$|(wed)$|(thu)$|(fri)$|(sat)$|(sun)$) && "$4" = $star ]]
 	then
 		d="$3"
-		echo "$d"
 	elif [[ "$4" =~ ((mon)$|(tue)$|(wed)$|(thu)$|(fri)$|(sat)$|(sun)$) && "$3" = $star ]]
 	then
 		d="$4"
-		echo "$d"
 	else
 		echo "Veuillez saisir correctement les parametres 3 et 4."
 	fi
@@ -54,23 +47,18 @@ then
 	if [[ "$5" =~ ^[1-31]{1,2}$ && "$6" =~ ^[1-31]{1,2}$ && "$5" == "$6" ]]
 	then
 		dm="$5"
-		echo $dm
 	elif [[ "$5" =~ ^[1-31]{1,2}$ && "$6" =~ ^[1-31]{1,2}$ && "$5" != "$6" ]]
 	then
 		dm="$5-$6"
-		echo $dm
 	elif [[ "$5" = $star && "$6" = $star ]]
 	then
 		dm="*"
-		echo "$dm"
 	elif [[ "$5" =~ ^[1-31]{1,2}$ && "$6" = $star ]]
 	then
 		dm="$5"
-		echo $dm
 	elif [[ "$6" =~ ^[1-31]{1,2}$ && "$5" = $star ]]
 	then
 		dm="$6"
-		echo $dm
 	else
 		echo "Veuillez saisir correctement les parametres 5 et 6."
 	fi
@@ -78,23 +66,18 @@ then
 	if [[ "$7" =~ ((jan)$|(feb)$|(mar)$|(apr)$|(may)$|(jun)$|(jul)$|(aug)$|(sep)$|(oct)$|(nov)$|(dec)$) && "$8" =~ ((jan)$|(feb)$|(mar)$|(apr)$|(may)$|(jun)$|(jul)$|(aug)$|(sep)$|(oct)$|(nov)$|(dec)$) && "$7" == "$8" ]]
 	then
 		m="$7"
-		echo $m
 	elif [[ "$7" =~ ((jan)$|(feb)$|(mar)$|(apr)$|(may)$|(jun)$|(jul)$|(aug)$|(sep)$|(oct)$|(nov)$|(dec)$) && "$8" =~ ((jan)$|(feb)$|(mar)$|(apr)$|(may)$|(jun)$|(jul)$|(aug)$|(sep)$|(oct)$|(nov)$|(dec)$) && "$7" != "$8" ]]
 	then
 		m="$7-$8"
-		echo $m
 	elif [[ "$7" = $star && "$8" = $star ]]
 	then
 		m="*"
-		echo "$m"
 	elif [[ "$7" =~ ((jan)$|(feb)$|(mar)$|(apr)$|(may)$|(jun)$|(jul)$|(aug)$|(sep)$|(oct)$|(nov)$|(dec)$) && "$8" = $star ]]
 	then
 		m="$7"
-		echo $m
 	elif [[ "$8" =~ ((jan)$|(feb)$|(mar)$|(apr)$|(may)$|(jun)$|(jul)$|(aug)$|(sep)$|(oct)$|(nov)$|(dec)$) && "$7" = $star ]]
 	then
 		m="$8"
-		echo $m
 	else
 		echo "Veuillez saisir correctement les parametres 7 et 8."
 	fi
@@ -107,7 +90,6 @@ then
 		while read ligne
 		do
 			tab[$i]="$ligne"
-			echo "$ligne"
 			i=$(($i+1))
 		done < /usr/local/var/lib/asterisk/context/standard.conf
 
@@ -123,6 +105,14 @@ then
 		echo "${tab[6]}" >> /usr/local/var/lib/asterisk/context/standard.conf
 		echo "${tab[7]}" >> /usr/local/var/lib/asterisk/context/standard.conf
 
+		#**************** RECOLLER LA FIN DU FICHIER **********************
+		if [[ "$i" -ge 8 ]]
+		then
+			for ((j=$i-6; j<=$i; j++))
+			do
+				echo "${tab[$j]}" >> /usr/local/var/lib/asterisk/context/standard.conf
+			done
+		fi
 		service asterisk reload
 	fi
 else

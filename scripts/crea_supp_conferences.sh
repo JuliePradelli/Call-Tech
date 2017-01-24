@@ -63,7 +63,7 @@ then
 					if [[ "$4" -eq 0 ]]
 					then
 						i=$(($3+1))
-						echo "exten => $i,1,Macro(confpub,$2,$2,user_admin,sample_admin_menu)" >> /usr/local/var/lib/asterisk/context/conference.conf
+						echo "exten => $i,1,Macro(confpub,$2,$2,user_admin,sample_admin_menu)" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_conference.sys
 					fi
 					service asterisk reload
 				else
@@ -95,7 +95,7 @@ then
 			then
 				rm /usr/local/var/lib/asterisk/room_conference/$2.conf
 				chemin="$2"
-				ligne=`grep -n "$chemin" /usr/local/var/lib/asterisk/context/conference.conf`
+				ligne=`grep -n "$chemin" /usr/local/var/lib/asterisk/context/DONOTDELETE_conference.sys`
 				num=`echo $ligne | cut -d':' -f1`
 				num1=`echo $ligne | cut -d')' -f2`
 				num2=`echo $num1 | cut -d':' -f1`
@@ -108,11 +108,11 @@ then
 				fi
 				if [[ ! -z "$num" && ! -z "$num2" ]]
 				then
-					sed -i".sav" "$num d" /usr/local/var/lib/asterisk/context/conference.conf
-					sed -i".sav" "$num2 d" /usr/local/var/lib/asterisk/context/conference.conf
+					sed -i".sav" "$num d" /usr/local/var/lib/asterisk/context/DONOTDELETE_conference.sys
+					sed -i".sav" "$num2 d" /usr/local/var/lib/asterisk/context/DONOTDELETE_conference.sys
 				elif [[ ! -z "$num" && -z "$num1" ]]
 				then
-					sed -i".sav" "$num d" /usr/local/var/lib/asterisk/context/conference.conf
+					sed -i".sav" "$num d" /usr/local/var/lib/asterisk/context/DONOTDELETE_conference.sys
 				else
 					echo "Impossible de supprimer votre conference, elle n'est pas présente dans le contexte."
 				fi

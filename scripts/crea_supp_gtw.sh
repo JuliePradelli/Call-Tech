@@ -57,7 +57,8 @@ then
 					# creation du contexte pour les appels entrants
 					touch /usr/local/var/lib/asterisk/context/$5.conf
 					echo "[$5]" >> /usr/local/var/lib/asterisk/context/$5.conf
-					echo "exten => s,1,Dial(SIP/50,20)" >> /usr/local/var/lib/asterisk/context/$5.conf
+					echo "exten => s,1,Goto(standard,50,1)" >> /usr/local/var/lib/asterisk/context/$5.conf
+					echo "include => standard" >> /usr/local/var/lib/asterisk/context/$5.conf
 
 					# include dans les differents fichiers
 					echo "#include \"/usr/local/var/lib/asterisk/users/$7.conf\"" >> /usr/local/etc/asterisk/sip.conf

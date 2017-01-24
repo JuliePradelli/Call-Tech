@@ -1,0 +1,19 @@
+[general]
+defaultexpirey=1800
+dtmfmode=auto
+qualify=yes
+language=fr
+disallow=all
+allow=ulaw
+allow=alaw
+allow=gsm
+bindport=5061
+transport=udp
+localnet=10.8.96.0/20
+externaddr=88.177.168.133
+nat=force_rport,comedia
+
+;videosupport=yes
+;allow=h263
+;allow=h263
+register => adjevi:adjevi123@ippi.fr:5060

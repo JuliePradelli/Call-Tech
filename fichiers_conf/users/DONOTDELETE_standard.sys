@@ -1,0 +1,8 @@
+[50]
+type=friend
+host=dynamic
+disallow=all
+allow=ulaw
+secret=standard
+context=standard
+username=standard

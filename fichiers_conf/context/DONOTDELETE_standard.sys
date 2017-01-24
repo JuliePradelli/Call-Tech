@@ -1,0 +1,15 @@
+[standard]
+exten => 50,1,Answer
+exten => 50,n,Ringing
+exten => 50,n,Wait(2)
+exten => 50,n,GotoIfTime(*,mon-tue,*,*?open:close)
+exten => 50,n(open),Dial(SIP/11)
+exten => 50,n(close),VoiceMail(21@default,u)
+exten => 50,n,Hangup
+exten => 50,n(open),Dial(SIP/11)
+exten => 50,n(close),VoiceMail(21@default,u)
+exten => 50,n,Hangup
+exten => 50,n,Hangup
+
+
+

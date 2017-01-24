@@ -17,28 +17,28 @@ then
 		do
 			tab[$i]="$ligne"
 			i=$(($i+1))
-		done < /usr/local/var/lib/asterisk/context/standard.conf
+		done < /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
 
 		#***************** SUPPRIMER LE FICHER ****************************
-		rm /usr/local/var/lib/asterisk/context/standard.conf
+		rm /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
 
 		#************** REECRIRE LE FICHIER AVEC LES NOUVEAUX PARAMETRES ****************
-		touch /usr/local/var/lib/asterisk/context/standard.conf
-		echo "${tab[0]}" >> /usr/local/var/lib/asterisk/context/standard.conf
-		echo "${tab[1]}" >> /usr/local/var/lib/asterisk/context/standard.conf
-		echo "${tab[2]}" >> /usr/local/var/lib/asterisk/context/standard.conf
-		echo "${tab[3]}" >> /usr/local/var/lib/asterisk/context/standard.conf
-		echo "${tab[4]}" >> /usr/local/var/lib/asterisk/context/standard.conf
-		echo "exten => 50,n(open),Dial(SIP/$2)" >> /usr/local/var/lib/asterisk/context/standard.conf
-		echo "${tab[6]}" >> /usr/local/var/lib/asterisk/context/standard.conf
-		echo "${tab[7]}" >> /usr/local/var/lib/asterisk/context/standard.conf
+		touch /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "${tab[0]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "${tab[1]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "${tab[2]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "${tab[3]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "${tab[4]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "exten => 50,n(open),Dial(SIP/$2)" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "${tab[6]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
+		echo "${tab[7]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
 
 		#**************** RECOLLER LA FIN DU FICHIER **********************
 		if [[ "$i" -ge 8 ]]
 		then
 			for ((j=$i-6; j<=$i; j++))
 			do
-				echo "${tab[$j]}" >> /usr/local/var/lib/asterisk/context/standard.conf
+				echo "${tab[$j]}" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
 			done
 		fi
 		service asterisk reload

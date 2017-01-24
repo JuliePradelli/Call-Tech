@@ -1,7 +1,6 @@
-/usr/local/var/lib/asterisk/users/adjevi_incoming.conf
-/usr/local/var/lib/asterisk/users/adjevi_outgoing.conf
+/usr/local/var/lib/asterisk/users/adjevi.conf
 /usr/local/var/lib/asterisk/users/alex.conf
 /usr/local/var/lib/asterisk/users/bastian.conf
-/usr/local/var/lib/asterisk/users/esiea1.conf
-/usr/local/var/lib/asterisk/users/esiea2.conf
-/usr/local/var/lib/asterisk/users/general.conf
+/usr/local/var/lib/asterisk/users/ippi_incoming.conf
+/usr/local/var/lib/asterisk/users/ippi_outgoing.conf
+/usr/local/var/lib/asterisk/users/julie.conf

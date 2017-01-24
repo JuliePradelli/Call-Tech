@@ -24,7 +24,7 @@ then
 		# ******************** CREATION USER ********************************
 		if [[ "$1" -eq 0 && ! -z "$3" && ! -z "$4" && ! -z "$5" && ! -z "$6" && ! -z "$7" ]] 
 		then
-			if [[ "$5" =~ ^[0-9]{2}$ && "$4" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ && -f /usr/local/var/lib/asterisk/context/$6.conf ]]
+			if [[ "$5" =~ ^[0-9]{2}$ && "$4" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]
 			then
 				# ******************** TRANSFERT MOBILE ********************************
 				if [[ "$7" -eq 0 && "$existence" -eq 0 ]]
@@ -45,7 +45,14 @@ then
 							echo "mailbox=$4" >> /usr/local/var/lib/asterisk/users/$2.conf
 							echo "callerid=\"transfertmob\"<$8>" >> /usr/local/var/lib/asterisk/users/$2.conf
 
-							echo "exten => $5,1,Macro(transfertmob,SIP/$5,$8)" >> /usr/local/var/lib/asterisk/context/$6.conf
+							if [[ "$6" == "default" ]]
+							then
+								name="DONOTDELETE_default.sys"
+							else
+								name="$6.conf"
+							fi
+
+							echo "exten => $5,1,Macro(transfertmob,SIP/$5,$8)" >> /usr/local/var/lib/asterisk/context/$name
 		
 							echo "#include \"/usr/local/var/lib/asterisk/users/$2.conf\"" >> /usr/local/etc/asterisk/sip.conf
 						
@@ -71,8 +78,15 @@ then
 					echo "username=$2" >> /usr/local/var/lib/asterisk/users/$2.conf
 					echo "mailbox=$4" >> /usr/local/var/lib/asterisk/users/$2.conf
 					echo "callerid=\"voicemail\"<>" >> /usr/local/var/lib/asterisk/users/$2.conf
+					
+					if [[ "$6" == "default" ]]
+					then
+						name="DONOTDELETE_default.sys"
+					else
+						name="$6.conf"
+					fi
 
-					echo "exten => $5,1,Macro(voicemail,SIP/$5,$5@default)" >> /usr/local/var/lib/asterisk/context/$6.conf
+					echo "exten => $5,1,Macro(voicemail,SIP/$5,$5@default)" >> /usr/local/var/lib/asterisk/context/$name
 		
 					echo "#include \"/usr/local/var/lib/asterisk/users/$2.conf\"" >> /usr/local/etc/asterisk/sip.conf
 				
@@ -94,14 +108,20 @@ then
 			# ************** RECUPERATION DU CONTEXTE POUR Y EFFACER LA LIGNE *******************
 			ligne7=`sed -n '4p' /usr/local/var/lib/asterisk/users/$2.conf`
 			context=`echo $ligne7 | cut -d'=' -f2`
+			if [[ "$context" == "default" ]]
+			then
+				context="DONOTDELETE_default.sys"
+			else
+				context="$context.conf"
+			fi
 			# ************** TROUVER LA LIGNE DE L'UTILISATEUR DANS LE CONTEXTE ******************
 			chemin6="exten => $exten"
-			ligne6=`grep -n "$chemin6" /usr/local/var/lib/asterisk/context/$context.conf`
+			ligne6=`grep -n "$chemin6" /usr/local/var/lib/asterisk/context/$context`
 			# ************* EFFACER LA LIGNE ***************
 			if [[ ! -z "$ligne6" ]]
 			then
 				num6=`echo $ligne6 | cut -d':' -f1`
-				sed -i".sav" "$num6 d" /usr/local/var/lib/asterisk/context/$context.conf
+				sed -i".sav" "$num6 d" /usr/local/var/lib/asterisk/context/$context
 			fi
 			# **************** EFFACER LE FICHIER SIP DE L'UTILISATEUR *********************
 			rm /usr/local/var/lib/asterisk/users/$2.conf

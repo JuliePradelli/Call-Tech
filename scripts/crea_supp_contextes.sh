@@ -8,32 +8,37 @@
 
 if [[ ! -z "$1" && ! -z "$2" ]]
 then
+	touch /home/bastoo/test/a.txt
 	if [[ ! -f "/usr/local/var/lib/asterisk/context/$2.conf" ]]
 	then	
+		echo "existence" >> /home/bastoo/test/a.txt
 		existence=0
 	else
 		existence=1
 	fi
 	if [[ "$1" =~ ^[0-1]{1}$ && ! -z "$3" ]]
 	then
+		echo "a" >> /home/bastoo/test/a.txt
 		# ******************** CREATION CONTEXTE ********************************
 		if [[ "$1" -eq 0 && "$existence" -eq 0 ]] 
 		then
+			echo "b" >> /home/bastoo/test/a.txt
 			touch /usr/local/var/lib/asterisk/context/$2.conf
+			echo "c" >> /home/bastoo/test/a.txt
 			echo "[$2]" >> /usr/local/var/lib/asterisk/context/$2.conf
 
 			# inclusion de tous les contextes dans le standard mais pas le contraire
-			echo "include => $2" >> /usr/local/var/lib/asterisk/context/standard.conf
+			echo "include => $2" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_standard.sys
 
 			echo "#include \"/usr/local/var/lib/asterisk/context/$2.conf\"" >> /usr/local/etc/asterisk/extensions.conf
-			echo "exten => 100,s,VoiceMailMain()" >> /usr/local/var/lib/asterisk/context/$1.conf
+			echo "exten => 100,s,VoiceMailMain()" >> /usr/local/var/lib/asterisk/context/$2.conf
 			# ajout dans la bdd en fonction de l'utilisation (pour utilisateur ou gtw)
-			if [[ "$3" =~ ^[0-1]{1} ]]
-			then
-				mysql -u root -p -e "SET @a = (SELECT MAX(\`contexte\`.\`id_contexte\`) FROM \`mydb\`.\`contexte\`); INSERT INTO \`mydb\`.\`contexte\` VALUES (@a+1,\"$2\",$3) ;"
-			else
-				mysql -u root -p -e "SET @a = (SELECT MAX(\`contexte\`.\`id_contexte\`) FROM \`mydb\`.\`contexte\`); INSERT INTO \`mydb\`.\`contexte\` VALUES (@a+1,\"$2\",0) ;"
-			fi
+			#if [[ "$3" =~ ^[0-1]{1} ]]
+			#then
+		#		mysql -u root -p -e "SET @a = (SELECT MAX(\`contexte\`.\`id_contexte\`) FROM \`mydb\`.\`contexte\`); INSERT INTO \`mydb\`.\`contexte\` VALUES (@a+1,\"$2\",$3) ;"
+			#else
+		#		mysql -u root -p -e "SET @a = (SELECT MAX(\`contexte\`.\`id_contexte\`) FROM \`mydb\`.\`contexte\`); INSERT INTO \`mydb\`.\`contexte\` VALUES (@a+1,\"$2\",0) ;"
+			#fi
 			service asterisk reload
 		# ******************** DESTRUCTION CONTEXTE ********************************
 		elif [[ "$1" -eq 1 && "$existence" -eq 1 ]]
@@ -114,5 +119,6 @@ then
 		echo "Le premier champ est mal renseigne."
 	fi
 else
+	touch /home/bastoo/test/c.txt
 	echo "Veuillez renseigner les trois parametres (creation(0)/suppression(1) - nom - contexte utilisateur(0)/gtw(1))."
 fi

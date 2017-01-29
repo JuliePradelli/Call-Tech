@@ -86,7 +86,9 @@ then
 				ligne2=`grep -n "$chemin2" /usr/local/etc/asterisk/sip.conf`
 				chemin3="#include \"/usr/local/var/lib/asterisk/context/$3.conf\""
 				ligne3=`grep -n "$chemin3" /usr/local/etc/asterisk/extensions.conf`
-				if [[ ! -z "$ligne1" && ! -z "$ligne2" && ! -z "$ligne3" ]]
+				chemin4="register => $2"
+				ligne4=`grep -n "$chemin4" /usr/local/var/lib/asterisk/users/DONOTDELETE_general.sys`
+				if [[ ! -z "$ligne1" && ! -z "$ligne2" && ! -z "$ligne3" && ! -z "$ligne4" ]]
 				then
 					num1=`echo $ligne1 | cut -d':' -f1`
 					sed -i".sav" "$num1 d" /usr/local/etc/asterisk/sip.conf
@@ -94,6 +96,8 @@ then
 					sed -i".sav" "$num2 d" /usr/local/etc/asterisk/sip.conf
 					num3=`echo $ligne3 | cut -d':' -f1`
 					sed -i".sav" "$num3 d" /usr/local/etc/asterisk/extensions.conf
+					num4=`echo $ligne4 | cut -d':' -f1`
+					sed -i".sav" "$num4 d" /usr/local/var/lib/asterisk/users/DONOTDELETE_general.sys
 					service asterisk reload
 				else
 					echo "cette gateway a ete mal cree, nous n'avons pas pu la detruire."

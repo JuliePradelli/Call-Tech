@@ -58,7 +58,7 @@ then
 					echo "max_members=10" >> /usr/local/var/lib/asterisk/room_conference/$2.conf
 
 					echo "#include \"/usr/local/var/lib/asterisk/room_conference/$2.conf\"" >> /usr/local/etc/asterisk/confbridge.conf
-					echo "exten => $3,1,Macro(confpub,$2,$2,$user,sample_user_menu)" >> /usr/local/var/lib/asterisk/context/conference.conf
+					echo "exten => $3,1,Macro(confpub,$2,$2,$user,sample_user_menu)" >> /usr/local/var/lib/asterisk/context/DONOTDELETE_conference.sys
 					#****************************** CREATION DE L'ADMIN SI BESOIN ***********************************
 					if [[ "$4" -eq 0 ]]
 					then

@@ -1,0 +1,20 @@
+<?php
+if(isset($_POST['username']) AND isset($_POST['mdp']) AND isset($_POST['mail']) AND isset($_POST['extension']) AND isset($_POST['contexte']) AND isset($_POST['creation']) AND isset($_POST['transfert_o']) AND isset($_POST['mobile']))
+{
+		#exec('/var/www/script/crea_supp_users.sh 0 '.$_POST['username'].' '.$_POST['mdp'].' '.$_POST['extension'].' '.$_POST['contexte'].' 0 '.$_POST['mobile']);
+}
+elseif(isset($_POST['username']) AND isset($_POST['mdp']) AND isset($_POST['mail']) AND isset($_POST['extension']) AND isset($_POST['contexte']) AND isset($_POST['creation']) AND isset($_POST['transfert_n']))
+{
+	exec('/var/www/script/crea_supp_users.sh 0 '.$_POST['username'].' '.$_POST['mdp'].' '.$_POST['mail'].' '.$_POST['extension'].' '.$_POST['contexte'].' 1');
+	#echo "coucou";
+	#exec('/var/www/script/crea_supp_users.sh 0 coucou coucou 32 default 1');
+}
+elseif(isset($_POST['username']) AND isset($_POST['suppression']))
+{
+		exec('/var/www/script/crea_supp_users.sh 1 '.$_POST['username']);
+}
+else
+{
+	include_once("vue/gestion_utilisateurs_groupes.php");
+}
+?>

@@ -56,8 +56,35 @@
       width: auto;
       height: 700px;
       margin: auto;
-      opacity: 0.7;
+      -webkit-filter: blur(1px);
+      filter: blur(1px);
   }
+     .button {
+          border-radius: 16px;
+          background-color: #FED136; /* Green */
+          border: none;
+          color: transparent;
+          padding: 16px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          -webkit-transition-duration: 0.4s; /* Safari */
+          transition-duration: 0.4s;
+          cursor: pointer;
+      }
+
+      .button1 {
+          background-color: transparent;
+          color: white;
+          border: 2px solid #FED136;
+      }
+
+      .button1:hover {
+          background-color: #FED136;
+          color: white;
+      }
   </style>
 
 </head>
@@ -94,7 +121,7 @@
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="?page=connexion">Connexion</a>
+                        <a class="page-scroll" href="index.php?page=gestion_utilisateurs_groupes">Connexion</a>
                     </li>
                 </ul>
             </div>
@@ -118,7 +145,8 @@
   <div class="carousel-inner" role="listbox">
     <div class="item active">
       <img class="img-responsive" src="/vue/img/Fille-au-téléphone.jpg" alt="standard">
-        <div class="carousel-caption">
+	<div class="carousel-caption">
+<a href="http://counterpath.s3.amazonaws.com/downloads/X-Lite_4.9.7.1_83372.exe" class="button button1">Telechargez X-lite client</a>
             <h3>Travaillez et restez joignable depuis n'importe où</h3>
             <p>Appellez n'importe quel numéro qu'il soit interne ou externe à votre entreprise</p>
         </div>
@@ -126,14 +154,16 @@
 
     <div class="item">
       <img class="img-responsive" src="/vue/img/client.jpg" alt="Chania">
-        <div class="carousel-caption">
+	<div class="carousel-caption">
+<a href="http://counterpath.s3.amazonaws.com/downloads/X-Lite_4.9.7.1_83372.exe" style="color:black" class="button button1">Telechargez X-lite client</a>
             <h3>Un standard automatisé pour répondre 24/7 aux besoins des clients</h3>
         </div>
     </div>
 
     <div class="item">
       <img class="img-responsive" src="/vue/img/capture-conftel.jpg" alt="Flower">
-        <div class="carousel-caption">
+	<div class="carousel-caption">
+<a href="http://counterpath.s3.amazonaws.com/downloads/X-Lite_4.9.7.1_83372.exe" class="button button1">Telechargez X-lite client</a>
             <h3>Créez facilement des conférences !</h3>
         </div>
     </div>
@@ -179,8 +209,8 @@
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
                         <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
                     </span>
-                    <h4 class="service-heading">SVI</h4>
-                    <p class="text-muted">Automate autodirectionnel</p>
+                    <h4 class="service-heading">Standard</h4>
+                    <p class="text-muted">Appels redirig�es par le standardiste</p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">

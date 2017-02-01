@@ -22,9 +22,7 @@ then
 		# ******************** CREATION CONTEXTE ********************************
 		if [[ "$1" -eq 0 && "$existence" -eq 0 ]] 
 		then
-			echo "b" >> /home/bastoo/test/a.txt
 			touch /usr/local/var/lib/asterisk/context/$2.conf
-			echo "c" >> /home/bastoo/test/a.txt
 			echo "[$2]" >> /usr/local/var/lib/asterisk/context/$2.conf
 
 			# inclusion de tous les contextes dans le standard mais pas le contraire
@@ -119,6 +117,5 @@ then
 		echo "Le premier champ est mal renseigne."
 	fi
 else
-	touch /home/bastoo/test/c.txt
 	echo "Veuillez renseigner les trois parametres (creation(0)/suppression(1) - nom - contexte utilisateur(0)/gtw(1))."
 fi

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Création comptes utilisateurs</title>
+    <title>CONFERENCES</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/vue/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -52,26 +52,23 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
+		    <li>
                         <a class="page-scroll" href="index.php?page=gestion_utilisateurs_groupes">Utilisateurs</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=authorisation_conference">Conférences</a>
+                        <a class="page-scroll" href="index.php?page=gestion_salles_conf">Conférences</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="index.php?page=plan_appel">Transfert</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Authorisations</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="index.php?page=gestion_callcenters">Callcenters</a>
+                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Contextes</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="index.php?page=gestion_gateways">Gateways</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=inscription">Inscription</a>
+                        <a class="page-scroll" href="index.php?page=standard">Standard</a>
                     </li>
                 </ul>
             </div>
@@ -79,7 +76,8 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <section id="contact">
+    <section id="services">
+	<?php if(isset($alerte)){echo $alerte;}?>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -88,54 +86,73 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form action="index.php?page=gestion_salles_conf" method="post" role="form">
                         <div class="row">
-                            <div class="col-md-offset-3 col-md-6">  
-                                <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Utilisation pour
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Création</a></li>
-                                    <li><a href="#">Suppression</a></li>
-                                  </ul>
+                            <div class="col-md-offset-2 col-md-8">  
+			       <div class="radio">
+  					<label style="color:black;"><input type="radio" name="creation">Creation *</label><br>
+  					<label style="color:black;"><input type="radio" name="suppression">Suppression **</label>
+                                </div> 
+                                <br/>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Nom de la salle * **</span>
+                                      <input type="text" name="nom" class="form-control" placeholder="NOM DE LA SALLE" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Numero de la salle *</span>
+                                      <input type="text" name="numero" class="form-control" placeholder="NUMERO ENTRE 90 et 99" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="admin_o">Creation d'un utilisateur admin *</label><br>
+  					<label style="color:black;"><input type="radio" name="admin_n">Pas de creation d'un utilisateur admin *</label>
                                 </div>
-                                
                                 <br/>
-                                    <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1">Nom de la salle</span>
-                                      <input type="text" class="form-control" placeholder="Nom de la salle" aria-describedby="basic-addon1">
-                                    </div>
-                                <br/>
-                                    <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1">Numéro de la salle</span>
-                                      <input type="text" class="form-control" placeholder="Numéro de la salle" aria-describedby="basic-addon1">
-                                    </div>
-                                <br/>
-
-                                <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Contexte
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">mobile</a></li>
-                                    <li><a href="#">somecontext</a></li>
-                                  </ul>
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="user_mdp_o">Creation d'un utilisateur mot de passe *</label><br>
+  					<label style="color:black;"><input type="radio" name="user_mdp_n">Pas de creation de cet utilisateur *</label>
                                 </div>
                                 <br/>
                                     <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1">Mot de passe</span>
-                                      <input type="text" class="form-control" placeholder="Mot de passe" aria-describedby="basic-addon1">
+                                      <span class="input-group-addon" id="basic-addon1">Nom du nouvel utilisateur * **</span>
+                                      <input type="text" name="nom_mdp" class="form-control" placeholder="UNIQUEMENT SI CREATION UTILISATEUR MDP" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                     <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1">Nom du nouvel utilisateur</span>
-                                      <input type="text" class="form-control" placeholder="Mot de passe" aria-describedby="basic-addon1">
+                                      <span class="input-group-addon" id="basic-addon1">Mot de passe du nouvel utilisateur *</span>
+                                      <input type="text" name="mdp" class="form-control" placeholder="UNIQUEMENT SI CREATION UTILISATEUR MDP" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                             </div>
+            		<div class="row">
+                		<div class="col-lg-12 text-center">
+                    			<h2 class="section-heading">Options</h2>
+                		</div>
+                            <div class="col-md-offset-2 col-md-8">  
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="user_mdp_n">Utilisateur sans mot de passe</label><br>
+                                </div>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Utilisateur avec mot de passe</span>
+                                      <input type="text" name="user_mdp_o" class="form-control" placeholder="UNIQUEMENT SI LE BOUTON PRECEDENT N'EST PAS COCHE" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="meo">Mise en oeuvre</label><br>
+  					<label style="color:black;"><input type="radio" name="sup">Suppression</label><br>
+                                </div>
+                                <br/>
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="opt" value="0">Musique de fond lorsque l'utilisateur attend</label><br>
+  					<label style="color:black;"><input type="radio" name="opt" value="1">Commencer la conference en mode mute</label><br>
+  					<label style="color:black;"><input type="radio" name="opt" value="2">Annoncer le denombrement des utilisateurs</label><br>
+  					<label style="color:black;"><input type="radio" name="opt" value="3">Commencer la conference en mode mute</label><br>
+  					<label style="color:black;"><input type="radio" name="opt" value="4">Eviter le bruit de fond</label><br>
+  					<label style="color:black;"><input type="radio" name="opt" value="5">Annoncer les entrees et les sorties</label><br>
+                                </div>
+                                </div>
+            		</div>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>

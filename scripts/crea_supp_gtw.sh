@@ -23,13 +23,17 @@ if [[ ! -z "$1" && ! -z "$2" ]]
 then
 	if [[ "$1" =~ ^[0-1]{1}$ ]]
 	then
+		touch /a.txt
 		# **************************************** CREATION ***********************************************
 		if [[ "$1" -eq 0 ]]
 		then
+			touch /b.txt
 			if [[ ! -z "$3" && ! -z "$4" && ! -z "$5" && ! -z "$6" && ! -z "$7" && ! -z "$8" ]]
 			then
+				touch /c.txt
 				if [[ ! -f /usr/local/var/lib/asterisk/users/$7.conf && ! -f /usr/local/var/lib/asterisk/users/$8.conf && ! -f /usr/local/var/lib/asterisk/context/$5.conf && "$6" =~ ^[0-9]{4}$ ]]
 				then
+					touch /d.txt
 					# utilisateur appel entrant
 					touch /usr/local/var/lib/asterisk/users/$7.conf
 					echo "[$7]" >> /usr/local/var/lib/asterisk/users/$7.conf

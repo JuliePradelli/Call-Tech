@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Création/Gestion contexte</title>
+    <title>CONTEXTES</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/vue/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -49,23 +49,23 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
+		    <li>
+                        <a class="page-scroll" href="index.php?page=gestion_utilisateurs_groupes">Utilisateurs</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=accueil">Accueil</a>
+                        <a class="page-scroll" href="index.php?page=gestion_salles_conf">Conférences</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=user_messages_vocaux">Messages vocaux</a>
+                        <a class="page-scroll" href="index.php?page=plan_appel">Transfert</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=user_plan_appel">Plan d'appel</a>
+                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Contextes</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=user_gestion_conference">Conférences</a>
+                        <a class="page-scroll" href="index.php?page=gestion_gateways">Gateways</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Contexte</a>
+                        <a class="page-scroll" href="index.php?page=standard">Standard</a>
                     </li>
                 </ul>
             </div>
@@ -73,52 +73,59 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <section id="contact">
+    <section id="services">
+	<?php if(isset($alerte)){echo $alerte;}?>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Création/suppression de contexte</h2>
+                    <h2 class="section-heading">Gestion des contextes</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <form action="index.php?page=creation_gestion_contexte" method="post" role="form">
                         <div class="row">
-                            <div class="col-md-offset-3 col-md-6">  
+                            <div class="col-md-offset-2 col-md-8">  
                                 <br/>
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="creation">Creation *</label><br>
+  					<label style="color:black;"><input type="radio" name="suppression">Suppression **</label>
+				</div>
+				<br/>
                                     <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1"></span>
-                                      <input type="text" name="nom" class="form-control" placeholder="Nom du Contexte" aria-describedby="basic-addon1">
+                                      <span class="input-group-addon" id="basic-addon1">Nom du contexte * **</span>
+                                      <input type="text" name="nom0" class="form-control" placeholder="NOM DU CONTEXTE" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
 				<div class="radio">
-  					<label style="color:white;"><input type="radio" name="utilisateurs">Utilisateurs</label><br>
-  					<label style="color:white;"><input type="radio" name="gtw">Gateways</label>
+  					<label style="color:black;"><input type="radio" name="utilisateurs">Utilisateurs *</label><br>
+  					<label style="color:black;"><input type="radio" name="gtw">Gateways *</label>
 				</div>
-                                <br/>
                                 <br/>
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
-                                    <h2 class="section-heading">Gestion de contexte</h2>
+                                    <h2 class="section-heading">Inclusions</h2>
                                     </div>
                                 </div>
                                 <br/>
                                 <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1"></span>
-                                      <input type="text" class="form-control" placeholder="Nom du Contexte" aria-describedby="basic-addon1">
+                                      <span class="input-group-addon" id="basic-addon1">Nom du premier contexte</span>
+                                      <input type="text" name="nom1" class="form-control" placeholder="NOM DU PREMIER CONTEXTE" aria-describedby="basic-addon1">
                                 </div>
                                 <br/>
-                                 <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Gestion des Contextes
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Rename</a></li>
-                                    <li><a href="#">include</a></li>
-                                    <li><a href="#">Update</a></li>
-                                  </ul>
+                                <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Nom du deuxieme contexte</span>
+                                      <input type="text" name="nom2" class="form-control" placeholder="NOM DU DEUXIEME CONTEXTE" aria-describedby="basic-addon1">
                                 </div>
+                                <br/>
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="direction1">Bididrectionnel</label><br>
+  					<label style="color:black;"><input type="radio" name="direction2">Unidirectionnel du premier vers le second</label><br>
+  					<label style="color:black;"><input type="radio" name="direction3">Unidirectionnel du second vers le premier</label><br/>
+  					<label style="color:black;"><input type="radio" name="direction4">Annulation bididrectionnel</label><br>
+  					<label style="color:black;"><input type="radio" name="direction5">Annulation unidirectionnel du premier vers le second</label>
+  					<label style="color:black;"><input type="radio" name="direction6">Annulation unidirectionnel du second vers le premier</label>
+				</div>
                                 <br/>
                                 </div>
                             </div>

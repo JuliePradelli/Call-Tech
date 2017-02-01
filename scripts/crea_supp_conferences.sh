@@ -17,7 +17,7 @@
 # $2=nom de la salle de conference
 # $3=nom utilisateur mdp
 
-if [[ ! -z "$1" && ! -z "$2" && ! -z "$3" ]] 
+if [[ ! -z "$1" && ! -z "$2" ]] 
 then
 	if [[ "$1" =~ ^[0-1]{1}$ ]]
 	then

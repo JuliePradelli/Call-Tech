@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Création comptes utilisateurs</title>
+    <title>GATEWAYS</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/vue/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -52,26 +52,23 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
+		    <li>
                         <a class="page-scroll" href="index.php?page=gestion_utilisateurs_groupes">Utilisateurs</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=authorisation_conference">Conférences</a>
+                        <a class="page-scroll" href="index.php?page=gestion_salles_conf">Conférences</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="index.php?page=plan_appel">Transfert</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Authorisations</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="index.php?page=gestion_callcenters">Callcenters</a>
+                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Contextes</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="index.php?page=gestion_gateways">Gateways</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=inscription">Inscription</a>
+                        <a class="page-scroll" href="index.php?page=standard">Standard</a>
                     </li>
                 </ul>
             </div>
@@ -79,7 +76,8 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <section id="contact">
+    <section id="services">
+	<?php if(isset($alerte)){echo $alerte;}?>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -94,51 +92,82 @@
                                 <br/>
 
 				<div class="radio">
-  					<label style="color:white;"><input type="radio" name="creation">Creation *</label><br>
-  					<label style="color:white;"><input type="radio" name="suppression">Suppression **</label>
+  					<label style="color:black;"><input type="radio" name="creation">Creation *</label><br>
+  					<label style="color:black;"><input type="radio" name="suppression">Suppression **</label>
                                 </div>
                                 <br/>
                                     <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1">Username * **</span>
-                                      <input type="text" name="username" class="form-control" placeholder="Username SIP de l'utilisateur" aria-describedby="basic-addon1">
+                                      <input type="text" name="username" class="form-control" placeholder="USERNAME DU COMPTE SIP" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                     <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1">Mot de passe *</span>
-                                      <input type="text" name="mdp" class="form-control" placeholder="Chiffres et lettres uniquement" aria-describedby="basic-addon1">
+                                      <input type="text" name="mdp" class="form-control" placeholder="CHIFFRES ET LETTRES UNIQUEMENT" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                     <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1">Adresse de la gateway *</span>
-                                      <input type="text" class="form-control" name="adresse" placeholder="Par exemple ovh.fr" aria-describedby="basic-addon1">
+                                      <input type="text" class="form-control" name="adresse" placeholder="PAR EXEMPLE OVH.FR" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                     <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1">Nom du contexte des appels entrants * **</span>
-                                      <input type="text" class="form-control" name="contexte_e" placeholder="Prenez un contexte non existant" aria-describedby="basic-addon1">
+                                      <input type="text" class="form-control" name="contexte_e" placeholder="ENTREZ UN CONTEXTE NON EXISTANT" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                     <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1">Port *</span>
-                                      <input type="text" class="form-control" name="port" placeholder="Avec 4 chiffres" aria-describedby="basic-addon1">
+                                      <input type="text" class="form-control" name="port" placeholder="AVEC 4 CHIFFRES" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                     <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1">Nom de l'utilisateur pour les appels entrants * **</span>
-                                      <input type="text" class="form-control" name="utilisateur_e" placeholder="Compte SIP des appels entrants" aria-describedby="basic-addon1">
+                                      <input type="text" class="form-control" name="utilisateur_e" placeholder="COMPTE SIP DES APPELS ENTRANTS" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                     <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1">Nom de l'utilisateur pour les appels sortants * **</span>
-                                      <input type="text" class="form-control" name="utilisateur_s" placeholder="Compte SIP des appels sortants" aria-describedby="basic-addon1">
+                                      <input type="text" class="form-control" name="utilisateur_s" placeholder="COMPTE SIP DES APPELS SORTANTS" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
+                                <br/>
                             </div>
+            			<div class="row">
+                			<div class="col-lg-12 text-center">
+                    				<h2 class="section-heading">Destinations</h2>
+                			</div>
+            			</div>
+                                <br/>
+                                <br/>
+                            <div class="col-md-offset-2 col-md-8">  
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Nom de l'utilisateur pour les appels entrants</span>
+                                      <input type="text" class="form-control" name="user_e" placeholder="COMPTE SIP DES APPELS ENTRANTS" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Nom de l'utilisateur pour les appels sortants</span>
+                                      <input type="text" class="form-control" name="user_s" placeholder="COMPTE SIP DES APPELS SORTANTS" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Switch</span>
+                                      <input type="text" class="form-control" name="switch" placeholder="PAR EXEMPLE _06." aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Contexte</span>
+                                      <input type="text" class="form-control" name="contexte" placeholder="CONTEXTE OU PLACER LE SWITCH" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>
+                                <br/>
                                 <button type="submit" class="btn btn-xl">Envoyer</button>
                             </div>
+			</div>
                         </div>
                     </form>
                 </div>

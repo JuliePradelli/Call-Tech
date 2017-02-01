@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Création comptes utilisateurs</title>
+    <title>TRANSFERT</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/vue/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -52,20 +52,23 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="index.php?page=accueil">Accueil</a>
+		    <li>
+                        <a class="page-scroll" href="index.php?page=gestion_utilisateurs_groupes">Utilisateurs</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=user_messages_vocaux">Messages vocaux</a>
+                        <a class="page-scroll" href="index.php?page=gestion_salles_conf">Conférences</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=user_plan_appel">Plan d'appel</a>
+                        <a class="page-scroll" href="index.php?page=plan_appel">Transfert</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=user_gestion_conference">Conférences</a>
+                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Contextes</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Contexte</a>
+                        <a class="page-scroll" href="index.php?page=gestion_gateways">Gateways</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="index.php?page=standard">Standard</a>
                     </li>
                 </ul>
             </div>
@@ -73,7 +76,8 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <section id="contact">
+    <section id="services">
+	<?php if(isset($alerte)){echo $alerte;}?>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -82,24 +86,28 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form  action="index.php?page=plan_appel" method="post" role="form">
                         <div class="row">
-                            <div class="col-md-offset-3 col-md-6">  
-                                <br/>
-                                <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Contexte
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">Mobile</a></li>
-                                    <li><a href="#">Somecontext</a></li>
-                                  </ul>
-                                </div>
+                            <div class="col-md-offset-2 col-md-8">  
                                 <br/>
                                     <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1">Numéro de mobile</span>
-                                      <input type="text" class="form-control" placeholder="Numéro de mobile" aria-describedby="basic-addon1">
+                                      <span class="input-group-addon" id="basic-addon1">Username</span>
+                                      <input type="text" name="username" class="form-control" placeholder="USERNAME DU COMPTE SIP" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Contexte</span>
+                                      <input type="text" name="contexte" class="form-control" placeholder="CONTEXTE DE L'UTILISATEUR SIP" aria-describedby="basic-addon1">
+                                    </div>
+                                <br/>
+				<div class="radio">
+  					<label style="color:black;"><input type="radio" name="transfert_o">Transfert</label><br>
+  					<label style="color:black;"><input type="radio" name="transfert_n">Pas de transfert</label>
+				</div>
+                                <br/>
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1">Numero</span>
+                                      <input type="text" name="numero" class="form-control" placeholder="NUMERO MOBILE DE L'UTILISATEUR" aria-describedby="basic-addon1">
                                     </div>
                                 <br/>
                                 <br/>

@@ -1,0 +1,10 @@
+Prise de note (chose à modifier ou à ajouter) :
+
+--Attribution de context : Un context default ( si la personne de précise aucuns context il est envoyé dans default).
+--Transfert mobile/voicemail : Rajouter context dans transfert.
+--Création de context = création d'include dans le standard et inversement.
+--Standard réparer bug transfert mobile/appelle durant les jours fermés.
+--Conférence en dur pas encore fait.
+--Création context conférence et on met toutes les conférences dedans.
+--Conférence plus de 2 personne.
+--Conférence avec mot de passe.

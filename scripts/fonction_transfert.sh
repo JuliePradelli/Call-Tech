@@ -12,10 +12,13 @@ i=0
 
 if [[ ! -z "$1" && ! -z "$2" && ! -z "$3" ]]
 then
+	echo "p1"
 	if [[ "$3" -eq 0 && ! -z "$4" ]]
 	then	
-		if [[ "$4" =~ ^06[0-9]{8}$ && -f /usr/local/var/lib/asterisk/users/$1.conf && -f /usr/local/var/lib/asterisk/context/$2.conf ]]
+		echo "p2"
+		if [[ "$4" =~ ^06[0-9]{8}$ && -f /usr/local/var/lib/asterisk/users/$1.conf ]]
 		then
+			echo "p3"
 			#******************* TROUVER LE FICHIER SIP DE L'UTILISATEUR ET LE LIRE ********************
 			while read ligne
 			do
@@ -42,28 +45,31 @@ then
 			echo "${tab[7]}" >> /usr/local/var/lib/asterisk/users/$1.conf
 			echo "callerid=\"tranfertmob\"<$4>" >> /usr/local/var/lib/asterisk/users/$1.conf
 
-			echo "exten => $exten,1,Macro(transfertmob,SIP/$exten,$4)" >> /usr/local/var/lib/asterisk/context/$2.conf
 
 			#***************** EFFACER LES TRACES DE VOICEMAIL ************************
 			#***************** RECUPERER L'ANCIEN CONTEXTE****************************
-			contexte=`echo ${tab[3]} | cut -d'=' -f2`
+			contexte1=`echo ${tab[3]} | cut -d'=' -f2`
+			contexte2=".conf"
+			contexte=$contexte1$contexte2
+			if [[ "$contexte" == "default.conf" ]]
+			then
+				contexte="DONOTDELETE_default.sys"
+			fi
 
 			#***************** RECHERCHER LA TRACE DANS L'ANCIEN CONTEXTE ****************
 			chemin1="exten => $exten,1,Macro(voicemail,"
-			ligne1=`grep -n "$chemin1" /usr/local/var/lib/asterisk/context/$contexte.conf`
+			ligne1=`grep -n "$chemin1" /usr/local/var/lib/asterisk/context/$contexte`
 			if [[ ! -z $ligne1 ]]
 			then
 				num1=`echo $ligne1 | cut -d':' -f1`
-				sed -i".sav" "$num1 d" /usr/local/var/lib/asterisk/context/$contexte.conf
-			else
-				echo "boucle ventrale"
+				sed -i".sav" "$num1 d" /usr/local/var/lib/asterisk/context/$contexte
+				echo "exten => $exten,1,Macro(transfertmob,SIP/$exten,$4)" >> /usr/local/var/lib/asterisk/context/$contexte
 			fi
-
 			service asterisk reload
 		fi
 	elif [[ "$3" -eq 1 ]]
 	then
-		if [[ -f /usr/local/var/lib/asterisk/users/$1.conf && -f /usr/local/var/lib/asterisk/context/$2.conf ]]
+		if [[ -f /usr/local/var/lib/asterisk/users/$1.conf ]]
 		then
 			#******************* TROUVER LE FICHIER SIP DE L'UTILISATEUR ET LE LIRE ********************
 			while read ligne
@@ -91,21 +97,25 @@ then
 			echo "${tab[7]}" >> /usr/local/var/lib/asterisk/users/$1.conf
 			echo "callerid=\"voicemail\"<>" >> /usr/local/var/lib/asterisk/users/$1.conf
 
-			echo "exten => $exten,1,Macro(voicemail,SIP/$exten,$exten@default)" >> /usr/local/var/lib/asterisk/context/$2.conf
 
 			#***************** EFFACER LES TRACES DE TRANSFERTMOB ************************
 			#***************** RECUPERER L'ANCIEN CONTEXTE****************************
-			contexte=`echo ${tab[3]} | cut -d'=' -f2`
+			contexte1=`echo ${tab[3]} | cut -d'=' -f2`
+			contexte2=".conf"
+			contexte=$contexte1$contexte2
+			if [[ "$contexte" == "default.conf" ]]
+			then
+				contexte="DONOTDELETE_default.sys"
+			fi
 
 			#***************** RECHERCHER LA TRACE DANS L'ANCIEN CONTEXTE ****************
 			chemin1="exten => $exten,1,Macro(transfertmob,"
-			ligne1=`grep -n "$chemin1" /usr/local/var/lib/asterisk/context/$contexte.conf`
+			ligne1=`grep -n "$chemin1" /usr/local/var/lib/asterisk/context/$contexte`
 			if [[ ! -z $ligne1 ]]
 			then
 				num1=`echo $ligne1 | cut -d':' -f1`
-				sed -i".sav" "$num1 d" /usr/local/var/lib/asterisk/context/$contexte.conf
-			else
-				echo "boucle ventrale"
+				sed -i".sav" "$num1 d" /usr/local/var/lib/asterisk/context/$contexte
+				echo "exten => $exten,1,Macro(voicemail,SIP/$exten,$exten@default)" >> /usr/local/var/lib/asterisk/context/$contexte
 			fi
 
 			service asterisk reload

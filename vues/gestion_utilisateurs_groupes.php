@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Gestion des utilisateurs</title>
+    <title>UTILISATEURS</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/vue/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -52,26 +52,23 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
+		    <li>
                         <a class="page-scroll" href="index.php?page=gestion_utilisateurs_groupes">Utilisateurs</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=authorisation_conference">Conférences</a>
+                        <a class="page-scroll" href="index.php?page=gestion_salles_conf">Conférences</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="index.php?page=plan_appel">Transfert</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Authorisations</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="index.php?page=gestion_callcenters">Callcenters</a>
+                        <a class="page-scroll" href="index.php?page=creation_gestion_contexte">Contextes</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="index.php?page=gestion_gateways">Gateways</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="index.php?page=inscription">Inscription</a>
+		    <li>
+                        <a class="page-scroll" href="index.php?page=standard">Standard</a>
                     </li>
                 </ul>
             </div>
@@ -80,6 +77,7 @@
         <!-- /.container-fluid -->
     </nav>
     <section id="services">
+	<?php if(isset($alerte)){echo $alerte;}?>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
